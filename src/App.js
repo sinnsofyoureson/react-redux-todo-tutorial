@@ -1,26 +1,34 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import todoApp from './reducers/reducers';
 import './App.css';
+
+import AddTodo from './containers/AddTodo';
+import VisibleTodoList from './containers/VisibleTodoList';
+import Footer from './components/Footer';
+
+const initinitialState = {
+  todos: [
+    {
+      text: 'first',
+      completed: false
+    }
+  ]
+}
+
+let store = createStore(todoApp, initinitialState);
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Provider store={store}>
+        <div className="App">
+          <AddTodo />
+          <VisibleTodoList />
+          <Footer />
+        </div>
+      </Provider>
     );
   }
 }
